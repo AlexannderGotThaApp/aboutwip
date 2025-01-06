@@ -47,7 +47,7 @@
     </style>
 </head>
 <body>
-    <!-- The audio player will be in the background with autoplay and loop enabled -->
+    <!-- Audio player will be placed in the background with autoplay and loop enabled -->
     <audio id="background-music" autoplay loop>
         <source src="music.mp3" type="audio/mpeg">
         Your browser does not support the audio element.
@@ -56,11 +56,31 @@
     <div class="text-container">
         <p>We've got nice music!!</p>
     </div>
-    <button class="redirect-button" onclick="window.location.href='https://alexanndergotthaapp.github.io/aboutwip/aboutscissors'">
+    <button class="redirect-button" onclick="navigate('https://alexanndergotthaapp.github.io/aboutwip/aboutscissors')">
         Go to About Scissors
     </button>
-    <button class="redirect-button" onclick="window.location.href='https://alexanndergotthaapp.github.io/aboutwip/aboutplant'">
+    <button class="redirect-button" onclick="navigate('https://alexanndergotthaapp.github.io/aboutwip/aboutplant')">
         See Things About Plant
     </button>
+
+    <script>
+        // Function to navigate to the new page while preserving the music
+        function navigate(url) {
+            // Store the current time of the audio in sessionStorage before navigating
+            sessionStorage.setItem('audioTime', document.getElementById('background-music').currentTime);
+            window.location.href = url;
+        }
+
+        // Check if there's a stored audio time in sessionStorage
+        window.onload = function() {
+            const audio = document.getElementById('background-music');
+            const savedTime = sessionStorage.getItem('audioTime');
+            
+            if (savedTime) {
+                audio.currentTime = savedTime; // Set the audio time to the saved time
+                audio.play(); // Ensure the music continues from the saved time
+            }
+        };
+    </script>
 </body>
 </html>
